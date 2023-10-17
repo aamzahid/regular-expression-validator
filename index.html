@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expression Validator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            text-align: center;
+            margin:auto;
+            width:fit-content;
+        }
+
+        h1 {
+            background-color: #011d1b;
+            color: white;
+            padding: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #009688;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #007568;
+        }
+
+        .valid {
+            color: green;
+        }
+
+        .invalid {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Expression Validator</h1>
+    <label for="expression">Select an expression to validate:</label>
+    <select id="expression">
+        <option value="email">Email</option>
+        <option value="phone">Phone Number</option>
+        <option value="postcode">Post Code</option>
+    </select>
+    <br>
+    <label for="input">Enter the value to validate:</label>
+    <input type="text" id="input">
+    <br>
+    <button onclick="validateExpression()">Validate</button>
+    <h2>Validation Result:</h2>
+    <p id="result"></p>
+
+    <script>
+        function validateExpression() {
+            const expressionSelect = document.getElementById("expression");
+            const selectedExpression = expressionSelect.value;
+            const inputField = document.getElementById("input");
+            const inputValue = inputField.value;
+
+            let regex;
+
+            switch (selectedExpression) {
+                case "email":
+                    regex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+                    break;
+                case "phone":
+                    regex = /^\d{11}$/; 
+                    break;
+                case "postcode":
+                    regex = /^\d{4}$/;
+                    break;
+                default:
+                    alert("Invalid expression selected.");
+                    return;
+            }
+
+            const resultElement = document.getElementById("result");
+
+            if (regex.test(inputValue)) {
+                resultElement.textContent = "Valid!";
+                resultElement.classList.remove("invalid");
+                resultElement.classList.add("valid");
+            } else {
+                resultElement.textContent = "Invalid!";
+                resultElement.classList.remove("valid");
+                resultElement.classList.add("invalid");
+            }
+        }
+    </script>
+</body>
+</html>
